@@ -1,0 +1,11 @@
+body{font-family:Arial,sans-serif;background:#fff5f8;margin:0;padding:20px}
+header{text-align:center;background:#fff;border-radius:12px;padding:20px}
+.card{background:#fff;margin-top:20px;padding:20px;border-radius:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:8px}
+.ticket{padding:12px;border-radius:8px;color:white;text-align:center;font-weight:bold;cursor:pointer}
+.disponible{background:#28a745}
+.apartado{background:#ffc107;color:#000}
+.pagado{background:#dc3545}
+.bar{height:24px;background:#eee;border-radius:20px;overflow:hidden}
+#progress{height:100%;background:#ff69b4;width:0%}
+.wa{display:inline-block;padding:10px 15px;background:#25D366;color:#fff;text-decoration:none;border-radius:8px}
