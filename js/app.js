@@ -64,11 +64,9 @@ try {
         d.textContent =
             numero;
 
-        d.onclick = () =>
-            window.open(
-                `https://wa.me/522297787027?text=Hola,%20me%20interesa%20el%20boleto%20%23${numero}`,
-                '_blank'
-            );
+       d.onclick = () => {
+    alert(numero);
+};
 
         tickets.appendChild(d);
     }
