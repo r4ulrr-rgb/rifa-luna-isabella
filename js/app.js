@@ -3,63 +3,127 @@ const CSV_URL =
 
 const tickets = document.getElementById('tickets');
 
+let todosLosBoletos = [];
+
+function actualizarCountdown() {
+
+```
+const fechaSorteo = new Date('2026-06-28T23:59:59');
+
+const ahora = new Date();
+
+const diferencia = fechaSorteo - ahora;
+
+const dias = Math.floor(diferencia / (1000*60*60*24));
+
+const horas = Math.floor((diferencia % (1000*60*60*24)) / (1000*60*60));
+
+const minutos = Math.floor((diferencia % (1000*60*60)) / (1000*60));
+
+document.getElementById('countdown').innerHTML =
+    `⏳ Sorteo: 28 de junio de 2026<br>
+    Faltan ${dias} días ${horas} horas ${minutos} minutos`;
+```
+
+}
+
+function filtrar(tipo){
+
+```
+tickets.innerHTML = '';
+
+let lista = todosLosBoletos;
+
+if(tipo !== 'todos'){
+    lista = todosLosBoletos.filter(b => b.estado === tipo);
+}
+
+lista.forEach(b => {
+
+    const d = document.createElement('div');
+
+    d.className = 'ticket ' + b.estado;
+
+    d.textContent = b.numero;
+
+    d.onclick = () => window.open(
+        `https://wa.me/522297787027?text=Hola,%20me%20interesa%20el%20boleto%20%23${b.numero}`,
+        '_blank'
+    );
+
+    tickets.appendChild(d);
+});
+```
+
+}
+
 async function cargarBoletos() {
 
-    const response = await fetch(CSV_URL);
-    const csv = await response.text();
+```
+const response = await fetch(CSV_URL);
 
-    const filas = csv.trim().split('\n');
+const csv = await response.text();
 
-    const datos = {};
+const filas = csv.trim().split('\\n');
 
-    for(let i = 1; i < filas.length; i++) {
+const datos = {};
 
-        const columnas = filas[i].split(',');
+for(let i=1;i<filas.length;i++){
 
-        const numero = String(parseInt(columnas[0])).padStart(3,'0');
-        const estado = columnas[1].trim().toLowerCase();
+    const columnas = filas[i].split(',');
 
-        datos[numero] = estado;
-    }
+    const numero =
+        String(parseInt(columnas[0])).padStart(3,'0');
 
-    let vendidos = 0;
+    const estado =
+        columnas[1].trim().toLowerCase();
 
-    for(let i = 1; i <= 200; i++) {
+    datos[numero] = estado;
+}
 
-        const numero = String(parseInt(columnas[0])).padStart(3,'0');
+let disponibles = 0;
+let apartados = 0;
+let pagados = 0;
 
-        let estado = datos[numero] || 'disponible';
+todosLosBoletos = [];
 
-        let clase = 'disponible';
+for(let i=1;i<=200;i++){
 
-        if(estado === 'apartado'){
-            clase = 'apartado';
-        }
+    const numero = String(i).padStart(3,'0');
 
-        if(estado === 'pagado'){
-            clase = 'pagado';
-            vendidos++;
-        }
+    let estado = datos[numero] || 'disponible';
 
-        const d = document.createElement('div');
+    if(estado === 'pagado') pagados++;
+    else if(estado === 'apartado') apartados++;
+    else disponibles++;
 
-        d.className = 'ticket ' + clase;
+    todosLosBoletos.push({
+        numero,
+        estado
+    });
+}
 
-        d.textContent = numero;
+document.getElementById('stats').innerHTML =
+    `${pagados} vendidos de 200`;
 
-        d.onclick = () => window.open(
-            `https://wa.me/522297787027?text=Hola,%20me%20interesa%20el%20boleto%20%23${numero}`,
-            '_blank'
-        );
+document.getElementById('progress').style.width =
+    `${(pagados/200)*100}%`;
 
-        tickets.appendChild(d);
-    }
+document.getElementById('resumen').innerHTML =
+    `🟢 Disponibles: ${disponibles}
+    &nbsp;&nbsp;
+    🟡 Apartados: ${apartados}
+    &nbsp;&nbsp;
+    🟥 Pagados: ${pagados}`;
 
-    document.getElementById('stats').innerHTML =
-        `${vendidos} vendidos de 200`;
+filtrar('todos');
 
-    document.getElementById('progress').style.width =
-        `${(vendidos/200)*100}%`;
+actualizarCountdown();
+
+setInterval(actualizarCountdown,60000);
+```
+
 }
 
 cargarBoletos();
+window.filtrar = filtrar;
