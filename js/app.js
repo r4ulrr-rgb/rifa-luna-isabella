@@ -16,7 +16,7 @@ async function cargarBoletos() {
 
         const columnas = filas[i].split(',');
 
-        const numero = columnas[0].trim();
+        const numero = String(parseInt(columnas[0])).padStart(3,'0');
         const estado = columnas[1].trim().toLowerCase();
 
         datos[numero] = estado;
