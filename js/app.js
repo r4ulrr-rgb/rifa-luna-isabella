@@ -26,7 +26,7 @@ async function cargarBoletos() {
 
     for(let i = 1; i <= 200; i++) {
 
-        const numero = String(i).padStart(3,'0');
+        const numero = String(parseInt(columnas[0])).padStart(3,'0');
 
         let estado = datos[numero] || 'disponible';
 
