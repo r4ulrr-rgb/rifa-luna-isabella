@@ -5,68 +5,52 @@ const tickets = document.getElementById('tickets');
 
 async function cargarBoletos() {
 
-```
-try {
-
     const response = await fetch(CSV_URL);
-
     const csv = await response.text();
 
     const filas = csv.trim().split('\n');
 
     const datos = {};
 
-    for (let i = 1; i < filas.length; i++) {
+    for(let i = 1; i < filas.length; i++) {
 
         const columnas = filas[i].split(',');
 
-        const numero =
-            String(parseInt(columnas[0]))
-            .padStart(3, '0');
-
-        const estado =
-            columnas[1]
-            .trim()
-            .toLowerCase();
+        const numero = columnas[0].trim();
+        const estado = columnas[1].trim().toLowerCase();
 
         datos[numero] = estado;
     }
 
-    tickets.innerHTML = '';
-
     let vendidos = 0;
 
-    for (let i = 1; i <= 200; i++) {
+    for(let i = 1; i <= 200; i++) {
 
-        const numero =
-            String(i).padStart(3, '0');
+        const numero = String(i).padStart(3,'0');
 
-        const estado =
-            datos[numero] || 'disponible';
+        let estado = datos[numero] || 'disponible';
 
         let clase = 'disponible';
 
-        if (estado === 'apartado') {
+        if(estado === 'apartado'){
             clase = 'apartado';
         }
 
-        if (estado === 'pagado') {
+        if(estado === 'pagado'){
             clase = 'pagado';
             vendidos++;
         }
 
-        const d =
-            document.createElement('div');
+        const d = document.createElement('div');
 
-        d.className =
-            'ticket ' + clase;
+        d.className = 'ticket ' + clase;
 
-        d.textContent =
-            numero;
+        d.textContent = numero;
 
-       d.onclick = () => {
-    alert(numero);
-};
+        d.onclick = () => window.open(
+            `https://wa.me/522297787027?text=Hola,%20me%20interesa%20el%20boleto%20%23${numero}`,
+            '_blank'
+        );
 
         tickets.appendChild(d);
     }
@@ -75,17 +59,7 @@ try {
         `${vendidos} vendidos de 200`;
 
     document.getElementById('progress').style.width =
-        `${(vendidos / 200) * 100}%`;
-
-} catch (error) {
-
-    console.error(error);
-
-    tickets.innerHTML =
-        '<h3>Error cargando boletos</h3>';
-}
-```
-
+        `${(vendidos/200)*100}%`;
 }
 
 cargarBoletos();
