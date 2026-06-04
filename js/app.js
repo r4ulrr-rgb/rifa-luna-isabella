@@ -5,7 +5,9 @@ const tickets = document.getElementById('tickets');
 
 async function cargarBoletos() {
 
-    const response = await fetch(CSV_URL);
+    const response = await fetch(CSV_URL + '&t=' + Date.now(), {
+    cache: 'no-store'
+});
     const csv = await response.text();
 
     const filas = csv.trim().split('\n');
@@ -69,4 +71,4 @@ if (!estado) estado = 'disponible';
 
 cargarBoletos();
 // 🔁 refresca cada 15 segundos
-setInterval(cargarBoletos, 15000);
+setInterval(cargarBoletos, 3000);
