@@ -9,3 +9,28 @@ header{text-align:center;background:#fff;border-radius:12px;padding:20px}
 .bar{height:24px;background:#eee;border-radius:20px;overflow:hidden}
 #progress{height:100%;background:#ff69b4;width:0%}
 .wa{display:inline-block;padding:10px 15px;background:#25D366;color:#fff;text-decoration:none;border-radius:8px}
+.leyenda {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.leyenda .item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.leyenda .color {
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+  border-radius: 3px;
+}
+
+.verde { background: green; }
+.naranja { background: orange; }
+.rojo { background: red; }
