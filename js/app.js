@@ -23,7 +23,8 @@ async function cargarBoletos() {
     }
 
     let vendidos = 0;
-
+    
+  tickets.innerHTML = '';
     for(let i = 1; i <= 200; i++) {
 
         const numero = String(i).padStart(3,'0');
@@ -57,6 +58,8 @@ async function cargarBoletos() {
 
     document.getElementById('stats').innerHTML =
         `${vendidos} vendidos de 200`;
+
+    cargarBoletos();
 
     document.getElementById('progress').style.width =
         `${(vendidos/200)*100}%`;
