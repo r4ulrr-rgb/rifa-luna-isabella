@@ -17,7 +17,9 @@ async function cargarBoletos() {
         const columnas = filas[i].split(',');
 
         const numero = columnas[0].trim();
-        const estado = columnas[1].trim().toLowerCase();
+      let estado = (columnas[1] || '').trim().toLowerCase();
+
+if (!estado) estado = 'disponible';
 
         datos[numero] = estado;
     }
