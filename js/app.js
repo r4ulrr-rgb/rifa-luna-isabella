@@ -66,3 +66,5 @@ async function cargarBoletos() {
 }
 
 cargarBoletos();
+// 🔁 refresca cada 15 segundos
+setInterval(cargarBoletos, 15000);
