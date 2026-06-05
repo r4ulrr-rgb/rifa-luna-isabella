@@ -1,21 +1,74 @@
-body{font-family:Arial,sans-serif;background:#fff5f8;margin:0;padding:20px}
-header{text-align:center;background:#fff;border-radius:12px;padding:20px}
-.card{background:#fff;margin-top:20px;padding:20px;border-radius:12px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:8px}
-.ticket{padding:12px;border-radius:8px;color:white;text-align:center;font-weight:bold;cursor:pointer}
-.disponible{background:#28a745}
-.apartado{background:#ffc107;color:#000}
-.pagado{background:#dc3545}
-.bar{height:24px;background:#eee;border-radius:20px;overflow:hidden}
-#progress{height:100%;background:#ff69b4;width:0%}
-.wa{display:inline-block;padding:10px 15px;background:#25D366;color:#fff;text-decoration:none;border-radius:8px}
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@400;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --rosa:    #e91e8c;
+  --rosa-claro: #fce4f3;
+  --dorado:  #d4a017;
+  --verde:   #1a9e3f;
+  --naranja: #e07b00;
+  --rojo:    #c0392b;
+  --fondo:   #fff8fd;
+  --card-bg: #ffffff;
+  --texto:   #2d1a2e;
+  --radio:   14px;
+  --sombra:  0 4px 18px rgba(233,30,140,0.10);
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  background: var(--fondo);
+  color: var(--texto);
+  padding: 16px;
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+header {
+  text-align: center;
+  background: linear-gradient(135deg, #fff0fa 0%, #fce4f3 100%);
+  border-radius: var(--radio);
+  padding: 28px 20px 20px;
+  box-shadow: var(--sombra);
+  border: 1px solid #f5c6e8;
+  position: relative;
+  overflow: hidden;
+}
+
+header::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 160px; height: 160px;
+  background: radial-gradient(circle, rgba(233,30,140,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.4rem, 5vw, 2.2rem);
+  color: var(--rosa);
+  line-height: 1.2;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+
+header p {
+  font-size: 0.95rem;
+  color: #5a3060;
+  margin: 4px 0;
+}
+
+/* ── LEYENDA ── */
 .leyenda {
-  margin-top: 10px;
+  margin-top: 14px;
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 12px;
   justify-content: center;
-  font-size: 14px;
+  font-size: 13px;
+  font-weight: 700;
 }
 
 .leyenda .item {
@@ -25,12 +78,115 @@ header{text-align:center;background:#fff;border-radius:12px;padding:20px}
 }
 
 .leyenda .color {
-  width: 12px;
-  height: 12px;
+  width: 14px; height: 14px;
+  border-radius: 4px;
   display: inline-block;
-  border-radius: 3px;
+  flex-shrink: 0;
 }
 
-.verde { background: green; }
-.naranja { background: orange; }
-.rojo { background: red; }
+.verde   { background: var(--verde); }
+.naranja { background: var(--naranja); }
+.rojo    { background: var(--rojo); }
+
+/* ── BOTÓN WHATSAPP ── */
+.wa {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 10px 22px;
+  background: #25D366;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  box-shadow: 0 3px 10px rgba(37,211,102,0.35);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.wa:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(37,211,102,0.4); }
+
+/* ── CARDS ── */
+.card {
+  background: var(--card-bg);
+  margin-top: 16px;
+  padding: 20px;
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  border: 1px solid #f0e0f5;
+}
+
+.card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: var(--rosa);
+  margin-bottom: 10px;
+}
+
+/* ── BARRA PROGRESO ── */
+#stats {
+  font-size: 0.9rem;
+  color: #5a3060;
+  margin-bottom: 8px;
+}
+
+.bar {
+  height: 22px;
+  background: #f0dff5;
+  border-radius: 30px;
+  overflow: hidden;
+}
+
+#progress {
+  height: 100%;
+  background: linear-gradient(90deg, var(--rosa) 0%, var(--dorado) 100%);
+  border-radius: 30px;
+  transition: width 0.8s cubic-bezier(0.25, 1, 0.5, 1); /* animación suave */
+}
+
+/* ── INDICADOR ACTUALIZACIÓN ── */
+#ultima-actualizacion {
+  font-size: 11px;
+  color: #b088b8;
+  margin-top: 8px;
+  text-align: right;
+}
+
+/* ── GRID BOLETOS ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(62px, 1fr));
+  gap: 7px;
+}
+
+/* ── BOLETOS — sin transition en background para evitar parpadeo de color ── */
+.ticket {
+  padding: 10px 4px;
+  border-radius: 8px;
+  color: white;
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.82rem;
+  cursor: pointer;
+  user-select: none;
+  letter-spacing: 0.5px;
+  /* Solo animamos la escala al hacer hover, NO el color de fondo */
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  will-change: transform;
+}
+
+.ticket:hover {
+  transform: scale(1.08);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+}
+
+.ticket:active { transform: scale(0.96); }
+
+.disponible { background: var(--verde); }
+.apartado   { background: var(--naranja); color: #fff; }
+.pagado     { background: var(--rojo); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 400px) {
+  .grid { grid-template-columns: repeat(auto-fill, minmax(54px, 1fr)); gap: 5px; }
+  .ticket { padding: 9px 2px; font-size: 0.78rem; }
+}
+
